@@ -172,7 +172,7 @@ Trainee Management, Created web api
  
 ### Redis
 - Cache-aside pattern
-- Absolure TTL: 60 Minutes
+- Absolute TTL: 60 Minutes
 - Sliding Expiration: 10 minutes
 - Automatic database fallback
  
