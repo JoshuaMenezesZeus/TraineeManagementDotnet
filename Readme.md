@@ -7,6 +7,7 @@ C#, ASP.NET, MySql, Redis, RabbitMQ, Docker
 
 ## Project Structure
 
+```text
 TraineeManagement.Api
 │
 ├── Controllers
@@ -30,14 +31,17 @@ SubmissionProcessor.Worker
 ├── logs
 ├── Settings
 └── Logs
- 
+
 TrainingDirectory.Api
+│
 ├── Controllers
 └── DTO
+```
+
 
 ## Architecture
 
-![alt text](workflow_diagram.png)
+![Architecture](workflow_diagram.png)
 
 ## Backend Setup Steps
 - Download and extract the project
