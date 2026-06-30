@@ -1,0 +1,26 @@
+# services:
+#   redis:
+#     image: docker-registry-002.zeuslearning.com/zeuslearning/redis:7-alpine
+#     container_name: trainee-management-redis
+#     restart: always
+#     ports:
+#       - "6379:6379"
+#     volumes:
+#       - redis_data:/data
+      
+#   rabbitmq:
+#     image: docker-registry-002.zeuslearning.com/zeuslearning/rabbitmq:4.0.9-management
+#     container_name: rabbitmq_container
+#     ports:
+#       - "5672:5672"
+#       - "15672:15672"
+#     environment:
+#       RABBITMQ_DEFAULT_USER: guest
+#       RABBITMQ_DEFAULT_PASS: guest
+#     volumes:
+#       - rabbitmq-data:/var/lib/rabbitmq
+#     restart: unless-stopped
+ 
+# volumes:
+#   redis_data:
+#   rabbitmq-data:

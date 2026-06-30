@@ -4,40 +4,11 @@
 
 C#, ASP.NET, MySql, Redis, RabbitMQ, Docker
 
-
 ## Project Structure
+- Trainee.Api : Contains the main project
+- TrainingDirectory.Api : API For demonstrating Inter Service Communication
+- SubmissionProcessor.Worker
 
-TraineeManagement.Api
-│
-├── Controllers
-├── Services
-├── DTO
-├── Models
-├── Middleware
-├── Migrations
-├── Uploads
-├── Data
-├── logs
-└── Settings
-
-SubmissionProcessor.Worker
-│
-├── Workers
-├── Services
-├── DTO
-├── Models
-├── Data
-├── logs
-├── Settings
-└── Logs
- 
-TrainingDirectory.Api
-├── Controllers
-└── DTO
-
-## Architecture
-
-![alt text](workflow_diagram.png)
 
 ## Backend Setup Steps
 - Download and extract the project
@@ -50,26 +21,6 @@ TrainingDirectory.Api
 - Install MySql Server
 - Login to mysql using command: mysql -u root -p
 - Create database of trainee management
-
-
-## Configuration
-- appsettings.json
-- appsettings.Development.json
-- .env files
-- Docker Compose environment variables
-
-## Docker Compose
-
-docker compose up --build -d
- 
-The following services will be started automatically:
- 
-- MySQL
-- Redis
-- RabbitMQ
-- Trainee.Api
-- SubmissionProcessor.Worker
-- TrainingDirectory.Api
 
 ## EF Core migration commands
 - dotnet ef migrations add Migration1
@@ -159,62 +110,6 @@ Trainee Management, Created web api
 - POST /api/submissions/{submissionId}/files: Post a new file to store it locally and update metadata in mysql.
 - GET /api/submission-files/{id}/download: Download a file by id.
 - DELETE /api/submission-files/{id} : Delete a file from local storage.
-- GET /api/submission-files/{id}/download : Download the submission file
-
-- DELETE /api/submission-files/{id} : Delete a submission file 
-- POST /api/submissions/{submissionId}/files : Upload a submission file to the local storage
-
-- GET /api/processing-jobs/{id} : Get the processing job by id.
-- GET /health/live: Check to view status of the server.
-- GET /health/ready: Views status of RabbitMQ, redis and MySQL
- 
-## Design Decisions
- 
-### Redis
-- Cache-aside pattern
-- Absolute TTL: 60 Minutes
-- Sliding Expiration: 10 minutes
-- Automatic database fallback
- 
-### RabbitMQ
-- Durable Queue
-- Persistent Messages
-- Manual Acknowledgements
-- Prefetch Count = 1
- 
-### Retry Strategy
-- HTTP Client Resilience
-- Timeout Handling
-- Retry for Transient Failures
- 
-### Idempotency
-- MessageId
-- CorrelationId
-These identifiers help prevent duplicate processing.
- 
-### Failure Behaviour
-
-MySQL Unavailable
- 
-- Readiness check reports Unhealthy.
-- API returns database-related errors.
- 
-Redis Unavailable
- 
-- Application falls back to MySQL.
-- Cache failures are logged.
- 
-RabbitMQ Unavailable
- 
-- Publish operation logs failure.
-- Worker remains unavailable until RabbitMQ recovers.
- 
-Worker Failure
- 
-- Message is negatively acknowledged (NACK).
-- Processing is retried according to RabbitMQ configuration.
-
-
 
 ## Sample Request JSON
 {
@@ -242,6 +137,7 @@ Worker Failure
 ## Known Limitations
 - No email verification
 - No password reset
+- No file upload for submission.
 
 ## Challenges Faced
 - Dotnet installation of packages (proxy server blocker)
