@@ -80,11 +80,12 @@ The following services will be started automatically:
 - dotnet ef database update
 
 ## Login credentials for testing
-{
-  "username": "admin1",
-  "password": "admin1"
+```json
+{ 
+  "username": "admin1", 
+  "password": "admin1" 
 }
-
+```
 ## JWT usage instructions
 - navigate to /swagger
 - click authorize button
@@ -221,6 +222,7 @@ Worker Failure
 
 
 ## Sample Request JSON
+```json
 {
   "firstName": "Joshua",
   "lastName": "Menezes",
@@ -228,9 +230,10 @@ Worker Failure
   "techStack": "Python",
   "status": "Active"
 }
+```
 
 ## Sample Response JSON
-
+```json
 {
 "id": 1,
 "firstName": "Joshua",
@@ -241,7 +244,7 @@ Worker Failure
 "createdDate": "2026-06-08T12:54:05.2324036+00:00",
 "updatedDate": "2026-06-08T12:54:05.2330662+00:00"
 }
-
+```
 
 ## Known Limitations
 - No email verification
