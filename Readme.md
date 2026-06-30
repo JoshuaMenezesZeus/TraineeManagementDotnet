@@ -41,7 +41,8 @@ TrainingDirectory.Api
 
 ## Architecture
 
-![Architecture](workflow_diagram.png)
+<img src="./workflow_diagram.png" alt="Architecture" width="100%">
+
 
 ## Backend Setup Steps
 - Download and extract the project
