@@ -137,7 +137,7 @@ public class SubmissionProcessingWorker : BackgroundService
                 using (var scope = _scopeFactory.CreateScope())
                 {
                     var _context=scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                    var existingJob=await _context.ProcessingJobs.FirstOrDefaultAsync(x=>x.MessageID==message.MessageID);
+                    var existingJob=await _context.ProcessingJobs.FirstOrDefaultAsync(x=>x.CorrelationId==message.CorrelationId);
  
                     //IDEMPOTENCY DONE HERE
                     if(existingJob!=null && existingJob.ProcessingJobStatus==ProcessingJobStatus.Completed)
@@ -280,7 +280,7 @@ public class SubmissionProcessingWorker : BackgroundService
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Error while processing RabbitMQ message");
+                _logger.LogError(e, $"Error while processing RabbitMQ message {e.Message}");
                 if(_channel!=null)
                 {
                     await _channel.BasicNackAsync(

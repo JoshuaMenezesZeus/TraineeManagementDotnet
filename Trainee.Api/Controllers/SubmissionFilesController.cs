@@ -31,7 +31,12 @@ namespace Trainee.Api.Controllers
             await _service.DeleteAsync(id);
             return NoContent();
         }
-
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> GetById(int id)
+        {   
+            var response = await _service.GetById(id);
+            return Ok(response);
+        }
 
     }
 }

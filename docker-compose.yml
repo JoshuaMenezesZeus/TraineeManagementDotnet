@@ -106,6 +106,8 @@ services:
         condition: service_started
     ports:
       - "8081:8080"
+    volumes:
+      - "./SubmissionProcessor.Worker/logs:/App/logs"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     restart: on-failure
@@ -130,6 +132,8 @@ services:
     container_name: trainingdir-api-container
     ports:
       - "8082:8080"
+    volumes:
+      - "./SubmissionProcessor.Worker/logs:/App/logs"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     restart: on-failure

@@ -8,5 +8,6 @@ namespace Trainee.Api.Services
         Task<SubmissionFileResponse> UploadAsync(int submissionId, IFormFile file, int userId);
         Task<FileDownloadResponse> DownloadAsync(int fileId);
         Task DeleteAsync(int fileId);
+        Task<SubmissionFileResponse> GetById(int fileId);
     }
 }

@@ -5,5 +5,6 @@ namespace Trainee.Api.Services
     public interface IProcessingJobService
     {
         Task<ProcessingJobResponse?> GetByIdAsync(int id);
+        Task<ProcessingJobResponse?> RetryProcessingJob(int id);
     }
 }

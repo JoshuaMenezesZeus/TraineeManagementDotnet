@@ -22,11 +22,19 @@ namespace Trainee.Api.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult> GetById(int id)
         {
-                var res =  await _service.GetByIdAsync(id);
-                if (res==null)
-                    return NotFound();
-                return Ok(res);
+            var res =  await _service.GetByIdAsync(id);
+            if (res==null)
+                return NotFound();
+            return Ok(res);
+        }
 
+        [HttpPost("{id:int}/retry")]
+        public async Task<ActionResult> RetryJob(int id)
+        {
+            var res =  await _service.RetryProcessingJob(id);
+            if (res==null)
+                return NotFound();
+            return Ok(res);
         }
     }
 }

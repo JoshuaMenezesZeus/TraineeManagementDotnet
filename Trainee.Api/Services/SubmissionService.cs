@@ -90,6 +90,5 @@ namespace Trainee.Api.Services
                 }
         }
 
-
     }
 }

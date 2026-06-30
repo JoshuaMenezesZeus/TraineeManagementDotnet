@@ -63,9 +63,10 @@ TrainingDirectory.Api
 - Docker Compose environment variables
 
 ## Docker Compose
-
+```bash
 docker compose up --build -d
- 
+```
+
 The following services will be started automatically:
  
 - MySQL
@@ -76,8 +77,11 @@ The following services will be started automatically:
 - TrainingDirectory.Api
 
 ## EF Core migration commands
-- dotnet ef migrations add Migration1
-- dotnet ef database update
+
+```bash
+dotnet ef migrations add Migration1
+dotnet ef database update
+```
 
 ## Login credentials for testing
 ```json

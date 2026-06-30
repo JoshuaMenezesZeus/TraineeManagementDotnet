@@ -88,7 +88,7 @@ namespace Trainee.Api.Services
             }
             catch
             {
-                await _context.SubmissionFiles.Remove(metadata.Id);
+                _context.SubmissionFiles.Remove(metadata);
                 _storage.DeleteAsync(metadata.StorageFileName);
                 await _context.SaveChangesAsync();
                 throw new Exception("Connection to RabbitMQ Failed at Publisher side!");
@@ -151,6 +151,21 @@ namespace Trainee.Api.Services
                 _logger.LogInformation("File Deleted successfully: {fileId}", fileId);
 
         }
-
+        public async Task<SubmissionFileResponse> GetById(int fileId)
+        {
+            var metadata = await _context.SubmissionFiles.FindAsync(fileId);
+            if (metadata == null)
+                throw new KeyNotFoundException("File Not Found");
+            
+            return new SubmissionFileResponse
+            {
+                Id = metadata.Id,
+                OriginalFileName = metadata.OriginalFileName,
+                ContentType = metadata.ContentType,
+                FileSize = metadata.Size,
+                CreatedDate = metadata.CreatedDate,
+                CorrelationId = _httpContextAccessor.HttpContext?.TraceIdentifier         
+            };
+        }
     }
 }
