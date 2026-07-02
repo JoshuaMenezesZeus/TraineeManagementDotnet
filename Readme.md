@@ -36,6 +36,10 @@ TrainingDirectory.Api
 │
 ├── Controllers
 └── DTO
+
+Trainee.AppHost
+│
+└── AppHost.cs
 ```
 
 
