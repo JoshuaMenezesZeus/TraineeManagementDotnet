@@ -63,7 +63,7 @@ namespace Trainee.Api.Services
                 await _messagePublisher.PublishAsync(message);
                 await transaction.CommitAsync();
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 await transaction.RollbackAsync();
                 _context.ChangeTracker.Clear();

@@ -142,12 +142,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true, // Ensure the token was issued by a trusted issuer
-                    ValidIssuer = jwtSettings.Issuer, // The expected issuer value from configuration
+                    ValidIssuer = jwtSettings!.Issuer, // The expected issuer value from configuration
                     ValidateAudience = true, // Disable audience validation (can be enabled as needed)
                     ValidAudience = jwtSettings.Audience,
                     ValidateLifetime = true, // Ensure the token has not expired
                     ValidateIssuerSigningKey = true, // Ensure the token's signing key is valid
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key!))
                 };
             });
 

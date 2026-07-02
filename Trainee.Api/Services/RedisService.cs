@@ -37,7 +37,7 @@ namespace Trainee.Api.Services{
                 return JsonSerializer.Deserialize<T>(cachedValue, _jsonoptions);
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _logger.LogCritical("Redis Connection has failed..");
                 return default;
@@ -59,7 +59,7 @@ namespace Trainee.Api.Services{
                 await _cache.SetStringAsync(key, serialized_data, options);
                 _logger.LogInformation("Cache Set for key: {k}", key);   
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _logger.LogCritical("Redis Connection has failed..");
                 return ;
@@ -76,7 +76,7 @@ namespace Trainee.Api.Services{
                 await _cache.RemoveAsync(key);
                 _logger.LogInformation("Cache Removed for key: {k}", key);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _logger.LogCritical("Redis Connection has failed..");
                 return ;

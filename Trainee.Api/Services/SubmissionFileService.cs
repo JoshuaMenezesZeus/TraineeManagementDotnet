@@ -97,7 +97,7 @@ namespace Trainee.Api.Services
             var job = new ProcessingJob
             {
               MessageID = message.MessageID,
-              CorrelationId = _httpContextAccessor.HttpContext?.TraceIdentifier,
+              CorrelationId = _httpContextAccessor.HttpContext?.TraceIdentifier ?? "no context",
               SubmissionId = message.SubmissionId,
               FileId = message.FileId,
               ProcessingJobStatus = ProcessingJobStatus.Queued,
@@ -116,7 +116,7 @@ namespace Trainee.Api.Services
                 ContentType = metadata.ContentType,
                 FileSize = metadata.Size,
                 CreatedDate = metadata.CreatedDate,
-                CorrelationId = _httpContextAccessor.HttpContext?.TraceIdentifier         
+                CorrelationId = _httpContextAccessor.HttpContext?.TraceIdentifier ?? "no context"         
             };
         }
 
@@ -164,7 +164,7 @@ namespace Trainee.Api.Services
                 ContentType = metadata.ContentType,
                 FileSize = metadata.Size,
                 CreatedDate = metadata.CreatedDate,
-                CorrelationId = _httpContextAccessor.HttpContext?.TraceIdentifier         
+                CorrelationId = _httpContextAccessor.HttpContext?.TraceIdentifier ?? "no context"        
             };
         }
     }
