@@ -8,11 +8,19 @@ using SubmissionProcessor.Worker.Services;
 using Microsoft.Extensions.Http.Resilience;
 using System.Net.Http.Headers;
 using Serilog;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection; 
+
 DotNetEnv.Env.Load();
 var builder = Host.CreateApplicationBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 
+// 1. DELETE the bad AddServiceDiscoveryEnvironmentVariables line
+// 2. DELETE builder.Services.AddServiceDiscovery()
+
 builder.Services.AddHostedService<Worker>();
+
+
 
 builder.Services.Configure<RabbitMQSettings>(
     builder.Configuration.GetSection("RabbitMQ")
@@ -47,12 +55,26 @@ var directorySettings = trainingDirectorySection.Get<TrainingDirectorySettings>(
  
 builder.Services.AddHttpClient<ITraineeDirectoryClient, TrainingDirectoryClient>(client =>
 {
-    client.BaseAddress = new Uri(directorySettings.BaseUrl);
+    // 1. Look for Aspire's exact injected environment variable names (checking both uppercase and lowercase)
+    var aspireUrl = Environment.GetEnvironmentVariable("services__trainingdirectory__http__0")
+                    ?? Environment.GetEnvironmentVariable("SERVICES__TRAININGDIRECTORY__HTTP__0");
+
+    if (!string.IsNullOrEmpty(aspireUrl))
+    {
+        client.BaseAddress = new Uri(aspireUrl);
+    }
+    else
+    {
+        // 2. Fallback to your local directorySettings if running outside of Aspire
+        client.BaseAddress = new Uri(directorySettings.BaseUrl);
+    }
+
     client.Timeout = TimeSpan.FromSeconds(directorySettings.TimeoutSeconds);
  
     client.DefaultRequestHeaders.Accept.Add(
         new MediaTypeWithQualityHeaderValue("application/json"));
 })
+
 .AddStandardResilienceHandler(options =>
 {
     options.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(8);
@@ -68,6 +90,7 @@ builder.Services.AddHttpClient<ITraineeDirectoryClient, TrainingDirectoryClient>
     options.CircuitBreaker.FailureRatio = 0.5;
     options.CircuitBreaker.BreakDuration = TimeSpan.FromSeconds(10);
 });
+
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>

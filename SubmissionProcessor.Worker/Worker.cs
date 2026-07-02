@@ -1,6 +1,7 @@
 namespace SubmissionProcessor.Worker;
 
-public class Worker(ILogger<Worker> logger) : BackgroundService
+//ILogger<Worker> logger
+public class Worker() : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {

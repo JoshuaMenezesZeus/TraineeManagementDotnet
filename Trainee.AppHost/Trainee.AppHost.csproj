@@ -1,0 +1,20 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.4.6">
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrainingDirectory.Api\TrainingDirectory.Api.csproj" />
+    <ProjectReference Include="..\SubmissionProcessor.Worker\SubmissionProcessor.Worker.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.ServiceDiscovery" Version="10.7.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>538e02c1-f0e2-42bb-a8e0-70659d609437</UserSecretsId>
+  </PropertyGroup>
+
+</Project>

@@ -155,7 +155,7 @@ public class SubmissionProcessingWorker : BackgroundService
                         existingJob = new ProcessingJob
                         {
                             MessageID=message.MessageID,
-                            CorrelationId=message.CorrelationId,
+                            CorrelationId=message.CorrelationId ?? "no context",
                             SubmissionId=message.SubmissionId,
                             FileId=message.FileId,
                             ProcessingJobStatus = ProcessingJobStatus.Processing,
@@ -210,9 +210,15 @@ public class SubmissionProcessingWorker : BackgroundService
                                 };
                             
                             }
-                                _logger.LogInformation("Successfully retrieved profile ID:{Id} Name: {Name} Email: {Email} Designation: {Designation}", traineeProfile.Id, traineeProfile.Name, traineeProfile.Email, traineeProfile.Designation);
- 
-
+                            if (traineeProfile != null)
+                            {
+                                _logger.LogInformation("Successfully retrieved profile ID:{Id} Name: {Name} Email: {Email} Designation: {Designation}", 
+                                    traineeProfile.Id, traineeProfile.Name, traineeProfile.Email, traineeProfile.Designation);
+                            }
+                            else
+                            {
+                                _logger.LogWarning("Trainee profile was not found or returned null for CorrelationId: {CorrelationId}", message.CorrelationId);
+                            }
 
 
 
@@ -305,6 +311,7 @@ public class SubmissionProcessingWorker : BackgroundService
         }
     }
  
+
     public override async Task StopAsync(CancellationToken cancellationToken)
     {
         if (_channel != null)
