@@ -10,7 +10,7 @@ public static class DbSeeder
 {
     public static async Task SeedAdminUserAsync(AppDbContext context)
     {
-        if (await context.Users.AnyAsync(u => u.Username == "admin2"))
+        if (await context.Users.AnyAsync(u => u.Username == Environment.GetEnvironmentVariable("DB_Seeder_Username")))
         {
             return;
         }
@@ -26,7 +26,7 @@ public static class DbSeeder
             UpdatedDate = DateTime.UtcNow
         };
  
-        adminUser.PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin2");
+        adminUser.PasswordHash = BCrypt.Net.BCrypt.HashPassword(Environment.GetEnvironmentVariable("DB_Seeder_Password"));
  
         await context.Users.AddAsync(adminUser);
         await context.SaveChangesAsync();
