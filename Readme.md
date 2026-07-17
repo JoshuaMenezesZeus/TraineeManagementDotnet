@@ -87,13 +87,6 @@ dotnet ef migrations add Migration1
 dotnet ef database update
 ```
 
-## Login credentials for testing
-```json
-{ 
-  "username": "admin1", 
-  "password": "admin1" 
-}
-```
 ## JWT usage instructions
 - navigate to /swagger
 - click authorize button
