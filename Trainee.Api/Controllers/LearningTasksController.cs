@@ -21,28 +21,18 @@ namespace Trainee.Api.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllLearningTasks(int? pageNumber, int? pageSize, string? search, LearningTaskStatus? status)
         {
-            // try
-            // {
                 var (resp, count) = await _service.GetAllLearningTasks(pageNumber, pageSize, search, status);
 
                 if (resp == null)
                     return NotFound();
 
                 return Ok(new PaginationLearningTaskResponse() { PageNumber = pageNumber ?? 1, PageSize = pageSize ?? 10, TotalRecords = count, Data = resp });
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
-
 
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult> GetSpecificLearnigTask(int id)
         {
-            // try
-            // {
                 if (id <= 0)
                     return BadRequest("ID should be greater than zero.");
 
@@ -50,51 +40,29 @@ namespace Trainee.Api.Controllers
                 if (res == null)
                     return NotFound();
                 return Ok(res);
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateNewLearningTask([FromBody] CreateLearningTask inputDTO)
         {
-            // try
-            // {
                 return Ok(await _service.AddNewLearningTask(inputDTO));
-
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
         }
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteLearnigTask(int id)
         {
-            // try
-            // {
                 if (id <= 0)
                     return BadRequest("ID should be greater than zero.");
 
                 if (await _service.DeleteLearningTask(id))
                     return NoContent();
                 return NotFound();
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
 
         }
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult> UpdateLearnigTask(int id, UpdateLearningTask request)
         {
-            // try
-            // {
                 if (id <= 0)
                     return BadRequest("ID should be greater than zero.");
                 var resp = await _service.EditLearningTask(id, request);
@@ -102,11 +70,6 @@ namespace Trainee.Api.Controllers
                     return NotFound();
 
                 return Ok(resp);
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
         }
     }
 }

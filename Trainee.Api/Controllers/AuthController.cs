@@ -22,19 +22,10 @@ namespace Trainee.Api.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> Login(LoginRequest request)
         {
-            // try
-            // {
                 var resp =  await _authservice.Login(request);
                 if (resp==null)
                     return BadRequest();
                 return Ok(resp);
-            // }
-
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
-
         }
     }
 }

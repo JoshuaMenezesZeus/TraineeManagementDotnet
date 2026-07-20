@@ -138,15 +138,14 @@ var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                // Define token validation parameters to ensure tokens are valid and trustworthy
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true, // Ensure the token was issued by a trusted issuer
-                    ValidIssuer = jwtSettings!.Issuer, // The expected issuer value from configuration
-                    ValidateAudience = true, // Disable audience validation (can be enabled as needed)
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtSettings!.Issuer, 
+                    ValidateAudience = true,
                     ValidAudience = jwtSettings.Audience,
-                    ValidateLifetime = true, // Ensure the token has not expired
-                    ValidateIssuerSigningKey = true, // Ensure the token's signing key is valid
+                    ValidateLifetime = true, 
+                    ValidateIssuerSigningKey = true, 
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key!))
                 };
             });
@@ -193,33 +192,11 @@ app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-// var summaries = new[]
-// {
-//     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-// };
+
 
 app.MapGet("/", () => "Hello World!");
-
-
-// app.MapGet("/weatherforecast", () =>
-// {
-//     var forecast =  Enumerable.Range(1, 5).Select(index =>
-//         new WeatherForecast
-//         (
-//             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-//             Random.Shared.Next(-20, 55),
-//             summaries[Random.Shared.Next(summaries.Length)]
-//         ))
-//         .ToArray();
-//     return forecast;
-// })
-// .WithName("GetWeatherForecast");
 
 app.MapControllers();
 
 app.Run();
 
-// record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-// {
-//     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-// }

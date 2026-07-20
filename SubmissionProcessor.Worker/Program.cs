@@ -15,8 +15,6 @@ DotNetEnv.Env.Load();
 var builder = Host.CreateApplicationBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 
-// 1. DELETE the bad AddServiceDiscoveryEnvironmentVariables line
-// 2. DELETE builder.Services.AddServiceDiscovery()
 
 builder.Services.AddHostedService<Worker>();
 
@@ -55,7 +53,6 @@ var directorySettings = trainingDirectorySection.Get<TrainingDirectorySettings>(
  
 builder.Services.AddHttpClient<ITraineeDirectoryClient, TrainingDirectoryClient>(client =>
 {
-    // 1. Look for Aspire's exact injected environment variable names (checking both uppercase and lowercase)
     var aspireUrl = Environment.GetEnvironmentVariable("services__trainingdirectory__http__0")
                     ?? Environment.GetEnvironmentVariable("SERVICES__TRAININGDIRECTORY__HTTP__0");
 
@@ -65,7 +62,6 @@ builder.Services.AddHttpClient<ITraineeDirectoryClient, TrainingDirectoryClient>
     }
     else
     {
-        // 2. Fallback to your local directorySettings if running outside of Aspire
         client.BaseAddress = new Uri(directorySettings.BaseUrl);
     }
 

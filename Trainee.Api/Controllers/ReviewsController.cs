@@ -22,22 +22,13 @@ namespace Trainee.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllReviews()
         {
-            // try
-            // {
                 var resp = await _service.GetAllReviews();
                 return Ok(resp);
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetByIdReview(int id)
         {
-            // try
-            // {
                 if (id <= 0)
                     return BadRequest("ID should be greater than zero.");
 
@@ -45,25 +36,12 @@ namespace Trainee.Api.Controllers
                 if (res == null)
                     return NotFound();
                 return Ok(res);
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
         }
 
         [HttpPost]
         public async Task<ActionResult> AddANewReview([FromBody] CreateReviewRequest inputDTO)
         {
-            // try
-            // {
                 return Ok(await _service.AddANewReview(inputDTO));
-
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
         }
     }
 }

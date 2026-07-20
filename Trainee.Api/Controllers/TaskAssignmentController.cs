@@ -22,22 +22,13 @@ namespace Trainee.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllTaskAssignment()
         {
-            // try
-            // {
                 var resp = await _service.GetAllTaskAssignments();
                 return Ok(resp);
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            // try
-            // {
                 if (id <= 0)
                     return BadRequest("ID should be greater than zero.");
 
@@ -45,25 +36,13 @@ namespace Trainee.Api.Controllers
                 if (res == null)
                     return NotFound();
                 return Ok(res);
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
         }
 
         [HttpPost]
         public async Task<ActionResult> CreateNewTaskAssignment([FromBody] CreateTaskAssignmentRequest inputDTO)
         {
-            // try
-            // {
                 return Ok(await _service.AddANewTaskAssignment(inputDTO));
 
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
         }
 
 
@@ -71,8 +50,6 @@ namespace Trainee.Api.Controllers
         [HttpPut("{id:int}/status")]
         public async Task<ActionResult> UpdateTaskAssingnmentStatus(int id, UpdateTaskAssignmentRequest request)
         {
-            // try
-            // {
                 if (id <= 0)
                     return BadRequest("ID should be greater than zero.");
                 var resp = await _service.UpdateTaskAssingnmentStatus(id, request);
@@ -83,11 +60,6 @@ namespace Trainee.Api.Controllers
                     resp,
                     message="Task status changed successfully"
                 });
-            // }
-            // catch (Exception ex)
-            // {
-            //     return StatusCode(500, $"Internal Server Error: {ex.Message}");
-            // }
         }
     }
 }
